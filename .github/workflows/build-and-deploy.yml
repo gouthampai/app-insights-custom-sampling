@@ -85,5 +85,5 @@ jobs:
         resourceGroup: ${{ secrets.AZURE_RESOURCE_GROUP }}
         imageToDeploy: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.ref_name }}-${{ needs.build-and-push.outputs.short_sha }}
         registryUrl: ${{ env.REGISTRY }}
-        registryUsername: ${{ github.actor }}
-        registryPassword: ${{ secrets.GITHUB_TOKEN }}
+        # registryUsername: ${{ github.actor }}
+        # registryPassword: ${{ secrets.GITHUB_TOKEN }}
