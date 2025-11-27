@@ -1,0 +1,40 @@
+name: PR Build and Test
+
+on:
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '10.0.x'
+
+    - name: Restore dependencies
+      run: dotnet restore AppInsightsCustomSamplingApi/AppInsightsCustomSamplingApi.csproj
+
+    - name: Build
+      run: dotnet build AppInsightsCustomSamplingApi/AppInsightsCustomSamplingApi.csproj --no-restore
+
+    - name: Run tests
+      run: dotnet test AppInsightsCustomSamplingApi/AppInsightsCustomSamplingApi.csproj --no-build --verbosity normal
+
+    - name: Check for test projects
+      id: check-tests
+      run: |
+        if find . -name "*.Tests.csproj" -o -name "*Test*.csproj" | grep -q .; then
+          echo "tests_exist=true" >> $GITHUB_OUTPUT
+        else
+          echo "tests_exist=false" >> $GITHUB_OUTPUT
+        fi
+
+    - name: Run all tests in solution
+      if: steps.check-tests.outputs.tests_exist == 'true'
+      run: dotnet test --verbosity normal
