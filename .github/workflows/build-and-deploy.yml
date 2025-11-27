@@ -87,4 +87,4 @@ jobs:
         imageToDeploy: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.ref_name }}-${{ needs.build-and-push.outputs.short_sha }}
         registryUrl: ${{ env.REGISTRY }}
         registryUsername: ${{ github.actor }}
-        registryPassword: ${{ secrets.GITHUB_TOKEN }}
+        registryPassword: ${{ secrets.PACKAGE_ACCESS_TOKEN }}
