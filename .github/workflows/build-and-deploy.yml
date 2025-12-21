@@ -81,7 +81,7 @@ jobs:
       with:
         containerAppName: ${{ vars.AZURE_CONTAINER_APP_NAME }}
         containerAppEnvironment: ${{vars.AZURE_APP_ENV_NAME}}
-        resourceGroup: ${{ secrets.AZURE_RESOURCE_GROUP }}
+        resourceGroup: ${{ vars.AZURE_RESOURCE_GROUP }}
         imageToDeploy: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.ref_name }}-${{ needs.build-and-push.outputs.short_sha }}
         registryUrl: ${{ env.REGISTRY }}
         registryUsername: ${{ github.actor }}
